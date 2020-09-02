@@ -9,13 +9,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
-@Table(name = "marcas")
+@Table(name = "marcas", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {
+                "nombre"
+            })})
+           
 @EntityListeners(AuditingEntityListener.class)
 public class Marca {
 	

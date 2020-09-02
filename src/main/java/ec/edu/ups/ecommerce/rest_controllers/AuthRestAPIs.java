@@ -27,12 +27,14 @@ import ec.edu.ups.ecommerce.services.services.UserPrincipal;
 import ec.edu.ups.ecommerce.entities.ERol;
 import ec.edu.ups.ecommerce.entities.ETipoDocumento;
 import ec.edu.ups.ecommerce.entities.PerfilUsuario;
+import ec.edu.ups.ecommerce.entities.Proveedor;
 import ec.edu.ups.ecommerce.entities.Rol;
 import ec.edu.ups.ecommerce.entities.Usuario;
 import ec.edu.ups.ecommerce.message.request.LoginForm;
 import ec.edu.ups.ecommerce.message.request.SignUpForm;
 import ec.edu.ups.ecommerce.message.response.JwtResponse;
 import ec.edu.ups.ecommerce.repositories.RepositorioPerfil;
+import ec.edu.ups.ecommerce.repositories.RepositorioProveedor;
 import ec.edu.ups.ecommerce.repositories.RepositorioRol;
 import ec.edu.ups.ecommerce.repositories.RepositorioUsuario;
 import ec.edu.ups.ecommerce.services.jwt.JwtProvider;
@@ -53,6 +55,9 @@ public class AuthRestAPIs {
 
 	@Autowired
 	RepositorioRol roleRepository;
+	
+	@Autowired
+	RepositorioProveedor providorRepository;
 
 	@Autowired
 	PasswordEncoder encoder;
@@ -108,6 +113,11 @@ public class AuthRestAPIs {
 
 		user.setRoles(roles);
 		Usuario persistUser = userRepository.save(user);
+		if(signUpRequest.getProvider()) {
+			Proveedor p = new Proveedor();
+			p.setUsuario(persistUser);
+			providorRepository.save(p);
+		}
 		PerfilUsuario perfil = new PerfilUsuario();
 		perfil.setUsuario(persistUser);
 		perfil.setNombre(signUpRequest.getFirstName());

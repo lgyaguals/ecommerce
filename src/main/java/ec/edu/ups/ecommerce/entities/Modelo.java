@@ -10,12 +10,17 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity
-@Table(name="modelos")
+@Table(name="modelos", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {
+                "nombre"
+            })})
+
 public class Modelo {
 	
 	@Id

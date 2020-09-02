@@ -16,3 +16,4 @@ public interface RepositorioRol extends JpaRepository<Rol, Long> {
 	
 	
 }
+
