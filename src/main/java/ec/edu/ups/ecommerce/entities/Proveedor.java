@@ -39,6 +39,8 @@ public class Proveedor {
 	@LastModifiedDate
 	@Column(name = "actualizado_en", nullable = false)
 	private Date actualizadoEn;
+	
+	
 
 	public Long getId() {
 		return id;
@@ -79,6 +81,8 @@ public class Proveedor {
 	public void setActualizadoEn(Date actualizadoEn) {
 		this.actualizadoEn = actualizadoEn;
 	}
+
+	
 
 	
 	
