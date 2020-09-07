@@ -33,7 +33,7 @@ public class Orden {
 	private float total;
 	@Enumerated(EnumType.STRING)
     @NaturalId
-    @Column(length = 60)
+    @Column(length = 10)
 	private EEstadoOrden estado = EEstadoOrden.PENDIENTE;
 	public Usuario getUsuario() {
 		return usuario;

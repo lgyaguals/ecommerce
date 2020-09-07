@@ -41,6 +41,7 @@ public class Producto {
 	@Column( nullable = false)
 	private String descripcion;
 	
+	@Column( nullable = false)
 	private float precio;
 	
 	private String urlImagen;

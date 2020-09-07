@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NaturalId;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -37,7 +40,12 @@ public class DetalleOrden {
 	@CreatedDate
 	@Column(name = "creado_en", nullable = false)
 	private Date creadoEn;
-
+	
+	@Enumerated(EnumType.STRING)
+    @NaturalId
+    @Column(length = 10)
+	private EEstadoOrden estado = EEstadoOrden.PENDIENTE;
+	
 	@LastModifiedDate
 	@Column(name = "actualizado_en", nullable = false)
 	private Date actualizadoEn;
