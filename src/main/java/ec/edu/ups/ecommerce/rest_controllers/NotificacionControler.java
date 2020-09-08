@@ -20,14 +20,14 @@ public class NotificacionControler {
 	@Autowired
 	private RepositorioNotificacion repositorioNotificacion;
 
-	@GetMapping("/{id}")
-	List<Notificacion> listarNotifiaciones(@PathVariable Long id) {
-		return repositorioNotificacion.findAllByUsuarioIdOrderByCreadoEnDesc(id);
+	@GetMapping("/{email}")
+	List<Notificacion> listarNotificaciones(@PathVariable String email) {
+		return repositorioNotificacion.findAllByUsuarioEmailOrderByCreadoEnDesc(email);
 	}
 
-	@GetMapping("/recientes/{id}")
-	ResponseEntity<String> notifiacionesRecientes(@PathVariable Long id) {
-		int notificaciones = repositorioNotificacion.findAllByUsuarioIdAndEstado(id, EEstadoNotificacion.Enviada).size();
+	@GetMapping("/recientes/{email}")
+	ResponseEntity<String> notificacionesRecientes(@PathVariable String email) {
+		int notificaciones = repositorioNotificacion.findAllByUsuarioEmailAndEstado(email, EEstadoNotificacion.Enviada).size();
 		if (notificaciones == 1) {
 			return ResponseEntity.ok("{\"message\":\"Tiene " + notificaciones + " notificación sin leer\" }");
 		} else if (notificaciones > 1) {

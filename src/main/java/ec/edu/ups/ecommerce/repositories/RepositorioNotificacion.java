@@ -11,7 +11,7 @@ import ec.edu.ups.ecommerce.entities.Notificacion;
 @Repository
 public interface RepositorioNotificacion  extends JpaRepository<Notificacion, Long>{
 	
-	List<Notificacion> findAllByUsuarioIdOrderByCreadoEnDesc(Long id);
-	List<Notificacion> findAllByUsuarioIdAndEstado(Long id, EEstadoNotificacion estado);
+	List<Notificacion> findAllByUsuarioEmailOrderByCreadoEnDesc(String email);
+	List<Notificacion> findAllByUsuarioEmailAndEstado(String email, EEstadoNotificacion estado);
 	
 }
