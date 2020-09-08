@@ -2,7 +2,7 @@ package ec.edu.ups.ecommerce.message.request;
 
 import javax.validation.constraints.NotBlank;
 
-public class ModelRequest {
+public class ModeloRequest {
 	@NotBlank
 	String name;
 	@NotBlank

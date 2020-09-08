@@ -19,6 +19,7 @@ public interface RepositorioProveedor  extends JpaRepository<Proveedor, Long>{
 			 nativeQuery=true)
 	 Object getProveedor(Long id);
 	
+	 Proveedor findByUsuarioId(Long id);
 	
 		 
 	 

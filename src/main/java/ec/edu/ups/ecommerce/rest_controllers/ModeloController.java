@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ec.edu.ups.ecommerce.entities.Marca;
 import ec.edu.ups.ecommerce.entities.Modelo;
-import ec.edu.ups.ecommerce.message.request.ModelRequest;
+import ec.edu.ups.ecommerce.message.request.ModeloRequest;
 import ec.edu.ups.ecommerce.repositories.RepositorioMarca;
 import ec.edu.ups.ecommerce.repositories.RepositorioModelo;
 
@@ -47,7 +47,7 @@ public class ModeloController {
 	}
 	
 	@PostMapping("/modelos")
-	protected ResponseEntity<String> crearModelo(@RequestBody ModelRequest modelo){
+	protected ResponseEntity<String> crearModelo(@RequestBody ModeloRequest modelo){
 		try {
 			if(repositorioModelo.existsByNombre(modelo.getName())) {
 				return  new ResponseEntity<String>("{\"message\":{\"type\":\"warning\", \"content\": \"El modelo ya está registrada. \"}}", HttpStatus.BAD_REQUEST);
@@ -67,7 +67,7 @@ public class ModeloController {
 		
 	}
 	 @PostMapping("/modelos/{id}")
-	  public ResponseEntity<String> actualizarModelo (@RequestBody ModelRequest modelo, @PathVariable Long id) {
+	  public ResponseEntity<String> actualizarModelo (@RequestBody ModeloRequest modelo, @PathVariable Long id) {
 	   Optional<Modelo> m = repositorioModelo.findById(id);
 	  
 		Optional<Marca> marca = repositorioMarca.findById(modelo.getBrandId());
