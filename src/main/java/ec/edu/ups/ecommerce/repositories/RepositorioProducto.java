@@ -9,17 +9,20 @@ import java.util.List;
 @Repository
 public interface RepositorioProducto extends JpaRepository<Producto, Long> {
 	
-	List<Producto> findAllByMarcaId(Long marca);
+	@Query("SELECT  p.modelo, p.precio, p.proveedor.id, p.descripcion,p.urlImagen FROM Producto p where p.marca.id = ?1")
+	List<Object> findAllByMarcaId(Long marca);
 	
-	List<Producto> findAllByModeloId(Long modelo);
+	@Query("SELECT p.modelo, p.precio, p.proveedor.id, p.descripcion,p.urlImagen FROM Producto p where p.modelo.id = ?1")
+	List<Object> findAllByModeloId(Long modelo);
 	
-	List<Producto> findAllByProveedorId(Long proveedor);
+	@Query("SELECT p.modelo, p.precio, p.proveedor.id, p.descripcion,p.urlImagen FROM Producto p where p.proveedor.id = ?1")
+	List<Object> findAllByProveedorId(Long proveedor);
 	
-	@Query("SELECT p FROM Producto p WHERE CONCAT(p.marca.nombre, p.modelo.nombre) LIKE %?1%")
-	List<Producto> search(String keyword);
+	@Query("SELECT  p.modelo , p.precio, p.proveedor.id, p.descripcion, p.urlImagen   FROM Producto p WHERE CONCAT(p.marca.nombre, p.modelo.nombre) LIKE %?1%")
+	List<Object> search(String keyword);
 	
-	@Query("SELECT p FROM Producto p WHERE p.precio <= ?1")
-	List<Producto> findAllByPrice(float price);
+	@Query("SELECT p.modelo, p.precio, p.proveedor.id, p.descripcion,p.urlImagen FROM Producto p WHERE p.precio <= ?1")
+	List<Object> findAllByPrice(float price);
 	
 	Boolean existsByProveedorIdAndModeloId(Long proveedor, Long marca);
 	

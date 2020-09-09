@@ -8,7 +8,7 @@ public class ProductoRequest {
 	private Long model;
 	
 	@NotBlank
-	private Long provider;
+	private String provider;
 	
 	@NotBlank
 	private float price;
@@ -24,10 +24,10 @@ public class ProductoRequest {
 	public void setModel(Long model) {
 		this.model = model;
 	}
-	public Long getProvider() {
+	public String getProvider() {
 		return provider;
 	}
-	public void setProvider(Long provider) {
+	public void setProvider(String provider) {
 		this.provider = provider;
 	}
 	public float getPrice() {

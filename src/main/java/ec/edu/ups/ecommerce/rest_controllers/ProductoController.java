@@ -19,6 +19,7 @@ import java.util.Optional;
 
 import ec.edu.ups.ecommerce.entities.Modelo;
 import ec.edu.ups.ecommerce.entities.Producto;
+import ec.edu.ups.ecommerce.entities.Proveedor;
 import ec.edu.ups.ecommerce.message.request.ProductoRequest;
 
 @RestController
@@ -48,34 +49,38 @@ public class ProductoController {
 	}
 
 	@GetMapping("/productos-marca/{marca}")
-	public List<Producto> listarProdutosPorMarca(@PathVariable Long marca) {
+	public List<Object> listarProdutosPorMarca(@PathVariable Long marca) {
 		return repositorioProducto.findAllByMarcaId(marca);
 	}
 
 	@GetMapping("/productos-modelo/{modelo}")
-	public List<Producto> listarProdutosPorModelo(@PathVariable Long modelo) {
+	public List<Object> listarProdutosPorModelo(@PathVariable Long modelo) {
 		return repositorioProducto.findAllByModeloId(modelo);
 	}
 
 	@GetMapping("/productos-proveedor/{proveedor}")
-	public List<Producto> listarProdutosPorProveedor(@PathVariable Long proveedor) {
-		return repositorioProducto.findAllByProveedorId(proveedor);
+	public List<Object> listarProdutosPorProveedor(@PathVariable String proveedor) {
+		
+		Proveedor p = repositorioProveedor.findByUsuarioEmail(proveedor);
+		System.out.println(p.getId());
+		return repositorioProducto.findAllByProveedorId(p.getId());
 	}
 
 	@GetMapping("/productos-precio/{precio}")
-	public List<Producto> listarProdutosPorProveedor(@PathVariable float precio) {
+	public List<Object> listarProdutosPorProveedor(@PathVariable float precio) {
 		return repositorioProducto.findAllByPrice(precio);
 	}
 
 	@GetMapping("/producto/{param}")
-	public List<Producto> buscarProducto(@PathVariable String param) {
+	public List<Object> buscarProducto(@PathVariable String param) {
 		return repositorioProducto.search(param);
 	}
 
 	@PostMapping("/productos")
 	ResponseEntity<String> registarProducto(@RequestBody ProductoRequest product) {
 		try {
-			if (repositorioProducto.existsByProveedorIdAndModeloId(product.getProvider(), product.getModel())) {
+			Proveedor proveedor = repositorioProveedor.findByUsuarioEmail(product.getProvider());
+			if (repositorioProducto.existsByProveedorIdAndModeloId(proveedor.getId(), product.getModel())) {
 				return new ResponseEntity<String>(
 						"{\"message\":{\"type\":\"warning\", \"content\": \"La producto ya está registrado. \"}}",
 						HttpStatus.BAD_REQUEST);
@@ -85,7 +90,7 @@ public class ProductoController {
 			m = (repositorioModelo.findById(product.getModel())).get();
 			p.setMarca(m.getMarca());
 			p.setModelo(m);
-			p.setProveedor((repositorioProveedor.findByUsuarioId(product.getProvider())));
+			p.setProveedor((repositorioProveedor.findByUsuarioEmail(product.getProvider())));
 			p.setDescripcion(product.getDescription());
 			p.setPrecio(product.getPrice());
 			p.setUrlImagen(product.getUrlImage());
@@ -97,7 +102,7 @@ public class ProductoController {
 					"{\"message\":{\"type\":\"error\", \"content\": \"Ha ocurrido un error\"}}",
 					HttpStatus.BAD_REQUEST);
 		}
-
+	
 	}
 
 	@PostMapping("/productos/{id}")
@@ -113,7 +118,7 @@ public class ProductoController {
 			m = (repositorioModelo.findById(product.getModel())).get();
 			p.get().setMarca(m.getMarca());
 			p.get().setModelo(m);
-			p.get().setProveedor((repositorioProveedor.findByUsuarioId(product.getProvider())));
+			p.get().setProveedor((repositorioProveedor.findByUsuarioEmail(product.getProvider())));
 			p.get().setDescripcion(product.getDescription());
 			p.get().setPrecio(product.getPrice());
 			p.get().setUrlImagen(product.getUrlImage());
