@@ -44,8 +44,8 @@ public class ProductoController {
 	}
 
 	@GetMapping("/productos/{id}")
-	public Optional<Producto> obtenerProducto(@PathVariable Long id) {
-		return repositorioProducto.findById(id);
+	public Optional<Object> obtenerProducto(@PathVariable Long id) {
+		return repositorioProducto.getById(id);
 	}
 
 	@GetMapping("/productos-marca/{marca}")
